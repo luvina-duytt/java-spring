@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+    <!-- Console Appender -->
+    <appender name="console-log" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss,SSS} %p [%t](%C.%M:%L) - %m%n"/>
+        </layout>
+<!--        <filter class="org.apache.log4j.varia.LevelRangeFilter">-->
+<!--            <param name="LevelMin" value="error" />-->
+<!--            <param name="LevelMax" value="error" />-->
+<!--        </filter>-->
+    </appender>
+
+    <!-- Info Log File Appender -->
+    <appender name="info-log" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="File" value="./logs/info.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss,SSS} %p - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="debug"/>
+            <param name="LevelMax" value="info"/>
+            <param name="AcceptOnMatch" value="true"/>
+        </filter>
+    </appender>
+
+    <!-- Warn Log File Appender -->
+    <appender name="warn-log" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="File" value="./logs/warn.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss,SSS} %p - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="warn"/>
+            <param name="LevelMax" value="warn"/>
+            <param name="AcceptOnMatch" value="true"/>
+        </filter>
+    </appender>
+
+    <!-- Error Log File Appender -->
+    <appender name="error-log" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="File" value="./logs/error.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss,SSS} %p [%t](%C.%M:%L)- %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="error"/>
+            <param name="LevelMax" value="error"/>
+            <param name="AcceptOnMatch" value="true"/>
+        </filter>
+    </appender>
+
+    <!-- Error Log Send Mail Appender -->
+    <appender name="email-log" class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="512" />
+        <param name="SMTPHost" value="mail.hospital.vn" />
+        <param name="From" value="tuandv@hospital.vn" />
+        <param name="SMTPUsername" value="tuandv@hospital.vn" />
+        <param name="SMTPPassword" value="Vantuan@" />
+        <param name="To" value="tuandv@hospital.vn" />
+        <param name="Subject" value="[Bigdata-Error] Xảy ra lỗi tại weather api!" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="error" />
+            <param name="LevelMax" value="error" />
+        </filter>
+    </appender>
+
+    <root>
+        <level value="debug"/>
+        <appender-ref ref="error-log"/>
+        <appender-ref ref="warn-log"/>
+        <!--<appender-ref ref="info-log"/>-->
+        <!--<appender-ref ref="email-log"/>-->
+        <appender-ref ref="console-log"/>
+    </root>
+</log4j:configuration>
